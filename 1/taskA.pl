@@ -1,14 +1,17 @@
-:- initialization(main, main).
+:- initialization(main).
 
 main :-
-    read(T),
+    read_line_to_string(user_input, Line),
+    number_string(T, Line),
     process(T),
     halt.
 
 process(0) :- !.
 process(T) :-
     T > 0,
-    read(N), read(A), read(B),
+    read_line_to_string(user_input, Line),
+    split_string(Line, " ", " ", Parts),
+    maplist(number_string, [N, A, B], Parts),
     Full is N // 3,
     Rem  is N mod 3,
     Base is Full * min(B, 3 * A),
